@@ -13,7 +13,7 @@ import UserNotifications
 
 @main
 struct BitchatApp: App {
-    static let bundleID = Bundle.main.bundleIdentifier ?? "chat.bitchat"
+    static let bundleID = Bundle.main.bundleIdentifier ?? "com.ikoro.ios"
     static let groupID = "group.\(bundleID)"
     
     @StateObject private var chatViewModel: ChatViewModel
@@ -47,7 +47,7 @@ struct BitchatApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            IkoroAppNavigation()
                 .environmentObject(chatViewModel)
                 .onAppear {
                     NotificationDelegate.shared.chatViewModel = chatViewModel

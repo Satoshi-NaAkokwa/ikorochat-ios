@@ -1,0 +1,53 @@
+name: Build iOS IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build-ios:
+    name: Build iOS IPA
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Import Code Signing Certs
+        run: |
+          mkdir -p ~/Library/MobileDevice/certificates
+          echo "${{ secrets.IOS_CERTIFICATES_P12 }}" | base64 --decode > ~/Library/MobileDevice/certificates/certificate.p12
+          mkdir -p ~/Library/MobileDevice/provisioning
+          echo "${{ secrets.IOS_PROVISIONING_PROFILE }}" | base64 --decode > ~/Library/MobileDevice/provisioning/profile.mobileprovision
+        env:
+          IOS_CERTIFICATES_P12: ${{ secrets.IOS_CERTIFICATES_P12 }}
+          IOS_PROVISIONING_PROFILE: ${{ secrets.IOS_PROVISIONING_PROFILE }}
+
+      - name: Build IPA
+        run: |
+          cd bitchat
+          xcodebuild -scheme bitchat \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath build/app.xcarchive \
+            CODE_SIGN_IDENTITY="${{ secrets.CODE_SIGNING_IDENTITY }}" \
+            PROVISIONING_PROFILE_SPECIFIER="${{ secrets.PROVISIONING_PROFILE_NAME }}"
+
+          xcodebuild -exportArchive \
+            -archivePath build/app.xcarchive \
+            -exportOptionsPlist exportOptions.plist \
+            -exportPath build/export
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ikoro-ios-ipa
+          path: build/export/*.ipa
+          retention-days: 7
+          if-no-files-found: warn
