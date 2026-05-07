@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "bitchat",
+    name: "ikoro",
     defaultLocalization: "en",
     platforms: [
         .iOS(.v16),
@@ -11,8 +11,8 @@ let package = Package(
     ],
     products: [
         .executable(
-            name: "bitchat",
-            targets: ["bitchat"]
+            name: "ikoro",
+            targets: ["ikoro"]
         ),
     ],
     dependencies:[
@@ -23,7 +23,7 @@ let package = Package(
     ],
     targets: [
         .executableTarget(
-            name: "bitchat",
+            name: "ikoro",
             dependencies: [
                 .product(name: "P256K", package: "swift-secp256k1"),
                 .product(name: "BitFoundation", package: "BitFoundation"),
@@ -47,7 +47,7 @@ let package = Package(
         .testTarget(
             name: "bitchatTests",
             dependencies: [
-                "bitchat",
+                "ikoro",
                 .product(name: "BitFoundation", package: "BitFoundation")
             ],
             path: "bitchatTests",

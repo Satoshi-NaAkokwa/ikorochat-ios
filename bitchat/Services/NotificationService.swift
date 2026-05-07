@@ -168,13 +168,13 @@ final class NotificationService {
     func sendGeohashActivityNotification(geohash: String, titlePrefix: String = "#", bodyPreview: String) {
         let title = "\(titlePrefix)\(geohash)"
         let identifier = "geo-activity-\(geohash)-\(Date().timeIntervalSince1970)"
-        let deeplink = "bitchat://geohash/\(geohash)"
+        let deeplink = "ikoro://geohash/\(geohash)"
         let userInfo: [String: Any] = ["deeplink": deeplink]
         sendLocalNotification(title: title, body: bodyPreview, identifier: identifier, userInfo: userInfo)
     }
 
     func sendNetworkAvailableNotification(peerCount: Int) {
-        let title = "👥 bitchatters nearby!"
+        let title = "👥 Ikoro users nearby!"
         let body = peerCount == 1 ? "1 person around" : "\(peerCount) people around"
         // Fixed identifier so iOS updates the existing notification instead of creating new ones
         let identifier = "network-available"

@@ -63,7 +63,7 @@ final class KeychainManager: KeychainManagerProtocol {
             kSecValueData as String: data,
             kSecAttrService as String: service,
             kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
-            kSecAttrLabel as String: "bitchat-\(key)"
+            kSecAttrLabel as String: "chat.ikoro.ios-\(key)"
         ]
         #if os(macOS)
         base[kSecAttrSynchronizable as String] = false
@@ -228,7 +228,7 @@ final class KeychainManager: KeychainManagerProtocol {
             kSecValueData as String: data,
             kSecAttrService as String: service,
             kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
-            kSecAttrLabel as String: "bitchat-\(key)"
+            kSecAttrLabel as String: "chat.ikoro.ios-\(key)"
         ]
         #if os(macOS)
         base[kSecAttrSynchronizable as String] = false

@@ -167,7 +167,7 @@ final class NoiseEncryptionService {
     private var fingerprintToPeerID: [String: PeerID] = [:]
     
     // Thread safety
-    private let serviceQueue = DispatchQueue(label: "chat.bitchat.noise.service", attributes: .concurrent)
+    private let serviceQueue = DispatchQueue(label: "chat.ikoro.ios.noise.service", attributes: .concurrent)
     
     // Security components
     private let rateLimiter = NoiseRateLimiter()
@@ -428,7 +428,7 @@ final class NoiseEncryptionService {
     private func canonicalAnnounceBytes(peerID: Data, noiseKey: Data, ed25519Key: Data, nickname: String, timestampMs: UInt64) -> Data {
         var out = Data()
         // context
-        let context = "bitchat-announce-v1".data(using: .utf8) ?? Data()
+        let context = "ikoro-announce-v1".data(using: .utf8) ?? Data()
         out.append(UInt8(min(context.count, 255)))
         out.append(context.prefix(255))
         // peerID (expect 8 bytes; pad/truncate to 8 for canonicalization)

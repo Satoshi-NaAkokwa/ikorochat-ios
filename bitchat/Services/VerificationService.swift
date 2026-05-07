@@ -129,7 +129,7 @@ final class VerificationService {
 
     func buildVerifyResponse(noiseKeyHex: String, nonceA: Data) -> Data? {
         // Sign context: verify-response | noiseKeyHex | nonceA
-        var msg = Data("bitchat-verify-resp-v1".utf8)
+        var msg = Data("ikoro-verify-resp-v1".utf8)
         let nk = noiseKeyHex.data(using: .utf8) ?? Data()
         msg.append(UInt8(min(nk.count, 255))); msg.append(nk.prefix(255))
         msg.append(nonceA)
@@ -174,7 +174,7 @@ final class VerificationService {
     }
 
     func verifyResponseSignature(noiseKeyHex: String, nonceA: Data, signature: Data, signerPublicKeyHex: String) -> Bool {
-        var msg = Data("bitchat-verify-resp-v1".utf8)
+        var msg = Data("ikoro-verify-resp-v1".utf8)
         let nk = noiseKeyHex.data(using: .utf8) ?? Data()
         msg.append(UInt8(min(nk.count, 255))); msg.append(nk.prefix(255))
         msg.append(nonceA)
